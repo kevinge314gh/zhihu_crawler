@@ -1,0 +1,11 @@
+*~
+*.py[co]
+*.swp
+.pydevproject
+*.project
+*.pydevproject
+.pre-commit-config.yaml
+**/.settings/
+**/.idea/
+
+
