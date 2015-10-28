@@ -1,6 +1,6 @@
 __author__ = 'wkguo'
 
-from utils import ConnectionPool, connect
+from connection import ConnectionPool, connect
 
 DBS = {}
 

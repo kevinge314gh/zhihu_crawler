@@ -1,6 +1,7 @@
 __author__ = 'wkguo'
 
 from pymongo import Connection
+from settings import LOGGING
 
 _CONNECTIONS = {}
 
@@ -33,5 +34,6 @@ class ConnectionPool(dict):
 
 
 if __name__ == '__main__':
+    n = LOGGING
     cnn = connect('172.16.77.53', port=27017,)
     print cnn.is_locked
