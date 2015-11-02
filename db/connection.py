@@ -36,4 +36,6 @@ class ConnectionPool(dict):
 if __name__ == '__main__':
     n = LOGGING
     cnn = connect('172.16.77.53', port=27017,)
-    print cnn.is_locked
+    re = cnn.weibo_ru_ru.user.find({})
+    re = [r for r in re]
+    print re

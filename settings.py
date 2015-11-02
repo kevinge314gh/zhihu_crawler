@@ -2,6 +2,19 @@ __author__ = 'wkguo'
 
 from logging import config
 
+MONGO_IP = '127.0.0.1'
+MONGO_PORT = 27017
+
+HEADERS = {'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20100101 Firefox/14.0.1',
+                   'Referer' : 'http:www.zhihu.com'}
+
+'''PATH'''
+ROOT_PATH = 'D:\github\zhihu_crawler'
+
+'''URL'''
+URL = 'http://www.zhihu.com'
+URL_PEOPLE = 'http://www.zhihu.com/people/'
+
 
 LOGGING = {
     'version': 1,
@@ -42,7 +55,7 @@ LOGGING = {
             'level': 'ERROR',
             'class': 'logging.handlers.WatchedFileHandler',
             'formatter': 'detail',
-            'filename': '/tmp/zhihu_crawler.err',
+            'filename': '/tmp/zhihu_crawler.erro',
         },
     },
     'loggers': {

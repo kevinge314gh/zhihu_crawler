@@ -4,7 +4,6 @@ __author__ = 'wkguo'
 from connection import connect
 import logging
 from utils.decorators import exception
-from pymongo import MongoClient
 
 _LOGGER = logging.getLogger('zhihu_crawler')
 
@@ -14,7 +13,7 @@ def config_mongodb(host, port):
     '''
     db = None
     try:
-        db = MongoClient(host,port).get_default_database()
+        db = connect(host, port)
         _LOGGER.info('config mongodb ok: %s, %s' % host % port)
     except Exception as ex:
         _LOGGER.error('config mongodbfailed: %s %s %s' % (ex, host, port))
@@ -22,7 +21,9 @@ def config_mongodb(host, port):
 
 if __name__ == '__main__':
     db = config_mongodb(host='172.16.77.53', port=27017)
-    print db
+    re = db.weibo_ru_ru.user.find({})
+    re = [r for r in re]
+    print re
 
 
 
