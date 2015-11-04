@@ -1,10 +1,15 @@
 __author__ = 'kevin'
+
+import libxml2
 import urllib2
 import cookielib
+import lxml.html as html
 
 from settings import ROOT_PATH,HEADERS,URL_PEOPLE
+from lxml.html.clean import Cleaner
+from BeautifulSoup import UnicodeDammit
 
-def get_html(self, url):
+def get_html( url):
         cookie = cookielib.MozillaCookieJar()
         cookie.load('%s/data/cookie.txt'%ROOT_PATH, ignore_discard=True, ignore_expires=True)
         handlder = urllib2.HTTPCookieProcessor(cookie)
@@ -19,6 +24,11 @@ def get_html(self, url):
         f.close()
         return html
 
+def load_dom(contend):
+    dom = html.fromstring(contend)
+    return dom
+
+
 class crawler(object):
 
 
@@ -26,6 +36,7 @@ class crawler(object):
         url = URL_PEOPLE + p_name
         html = get_html(self, url)
         people_info = {}
+
 
         return people_info
 
@@ -62,8 +73,18 @@ class crawler(object):
 
 if __name__ == '__main__':
     crawler = crawler()
-    html = crawler.get_html(url='http://www.zhihu.com/people/zhang-jia-wei')
-    print html
+    html = get_html(url='http://www.zhihu.com/people/zhang-jia-wei')
+    cleaner = Cleaner(
+        scripts=False, javascript=False, comments=True,
+        style=False, links=True, meta=False, add_nofollow=False,
+        page_structure=False, processing_instructions=True, embedded=False,
+        frames=False, forms=False, annoying_tags=False, remove_tags=None,
+        remove_unknown_tags=False, safe_attrs_only=False)
+    html = cleaner.clean_html(html)
+    html = UnicodeDammit(html,isHTML=True).markup
+    dom = load_dom(html)
+
+    print dom
 
 
 
