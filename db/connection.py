@@ -38,4 +38,5 @@ if __name__ == '__main__':
     cnn = connect('172.16.77.53', port=27017,)
     re = cnn.weibo_ru_ru.user.find({})
     re = [r for r in re]
+    print cnn.zhihu_crawler.peopel.save({'name':'guowenkai'})
     print re

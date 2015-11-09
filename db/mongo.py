@@ -19,9 +19,15 @@ def config_mongodb(host, port):
         _LOGGER.error('config mongodbfailed: %s %s %s' % (ex, host, port))
     return db
 
+
+
+def save_people_infos(infos, db):
+    return db.people.save(infos)
+
+
 if __name__ == '__main__':
     db = config_mongodb(host='172.16.77.53', port=27017)
-    re = db.weibo_ru_ru.user.find({})
+    re = db.zhihu_crawler.peopel.find()
     re = [r for r in re]
     print re
 

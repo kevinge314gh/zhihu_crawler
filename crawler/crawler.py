@@ -98,6 +98,7 @@ if __name__ == '__main__':
     # asks = soup_header.find('a', href = '/people/zhouyuan/asks').span.string
 
     people_infos = crawler.get_people_infos('zhouyuan')
+
     for k, v in people_infos.items():
         print k, ':', v
 
