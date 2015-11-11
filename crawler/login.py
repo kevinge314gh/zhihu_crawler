@@ -69,9 +69,9 @@ class login_zhihu():
         captcha=self.get_captcha()
         xsrf = self.get_xsrf()
         text=self.post_data(captcha,xsrf)
-        #post again
-        captcha=self.get_captcha()
-        text=self.post_data(captcha,xsrf)
+        # #post again
+        # captcha=self.get_captcha()
+        # text=self.post_data(captcha,xsrf)
         #index page
         request = urllib2.Request(url='http://www.zhihu.com', headers=self.headers)
         response = urllib2.urlopen(request)
