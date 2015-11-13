@@ -22,7 +22,7 @@ HEADERS = {'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20
 #            }
 
 '''PATH'''
-ROOT_PATH = 'D://github//zhihu_crawler'
+ROOT_PATH = '/home/kevin/github/zhihu_crawler'
 
 '''URL'''
 URL = 'http://www.zhihu.com'

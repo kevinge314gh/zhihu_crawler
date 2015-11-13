@@ -29,7 +29,7 @@ class login_zhihu():
     #get xsrf
     def get_xsrf(self):
         req = urllib2.Request(url=self.hosturl, headers=HEADERS)
-        h = urllib2.urlopen(req, timeout=1)
+        h = urllib2.urlopen(req, timeout=5)
         html = h.read()
         xsrf_str = r'<input type="hidden" name="_xsrf" value="(.*?)"/>'
         xsrf = re.findall(xsrf_str, html)[0]
@@ -42,7 +42,7 @@ class login_zhihu():
         print captchaurl
         req = urllib2.Request(url=captchaurl, headers=HEADERS)
         data = urllib2.urlopen(req, timeout=1).read()
-        f = open( '%s/data/captcha.jpg'%ROOT_PATH, 'w')
+        f = open( '%s/data/captcha.gif'%ROOT_PATH, 'w')
         f.write(data)
         f.close()
         captcha = raw_input( 'captcha is: ')

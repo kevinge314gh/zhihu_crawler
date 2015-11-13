@@ -21,14 +21,28 @@ from datetime import datetime
 
 _LOGGER = logging.getLogger('zhihu_crawler')
 
+
+def set_cookie():
+    #设置保存cookie的文件
+    filename = '%s/data/cookie.txt'%ROOT_PATH
+    cookie = cookielib.MozillaCookieJar(filename)
+    handler = urllib2.HTTPCookieProcessor(cookie)
+    opener = urllib2.build_opener(handler, urllib2.HTTPHandler)
+    urllib2.install_opener(opener)
+    return cookie
+
 def download(url, max_try_count):
 
     _LOGGER.debug('Start download %s at %s' % (url, datetime.now()))
     try_count = 1
     while try_count <= max_try_count:
         try:
+            cookie = set_cookie()
             request = urllib2.Request(url = url, headers=HEADERS)
+            header = request.get_full_url()
+            print header
             response = urllib2.urlopen(request, timeout=3)
+            cookie.save()
             if response is None:
                 _LOGGER.warning('Empty response for head request, url: %s' % url)
                 try_count += 1
@@ -41,7 +55,7 @@ def download(url, max_try_count):
             print 'try again----\n [url]%s' % url
             continue
 
-def get_html(url, max_try_count):
+def get_html(url, max_try_count=2):
     resp = download(url, max_try_count)
     html = resp.read()
     cleaner = Cleaner(
@@ -55,7 +69,6 @@ def get_html(url, max_try_count):
     # f.write(html)
     # f.close()
     return html
-
 
 
 class Crawler(object):
