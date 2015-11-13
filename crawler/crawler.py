@@ -116,28 +116,9 @@ class Crawler(object):
 
 if __name__ == '__main__':
 
-
-    url = 'http://www.zhihu.com/node/ProfileFolloweesListV2'
-    data = {
-        'method':'next',
-        'params':{"offset":60,"order_by":"created","hash_id":"f9de84865e3e8455a09af78bfe4d1da5"},
-        '_xsrf':'327696efedfd4529121f81c7017cc593'
-            }
-    headers = copy.deepcopy(HEADERS)
-
-    # cookie= {
-    #     '_xsrf':'327696efedfd4529121f81c7017cc593',
-    #     'cap_id':'MzE5NDNhMjk5ZGUxNDVjOGE1MjdiMGU0OWY4NWE2NGE=|1447144327|c8ff179a25d92c46a9feb20932ecc113af968d6a',
-    #     'z_c0':'QUFEQUxSRWFBQUFYQUFBQVlRSlZUYmM0YVZZQ05SSlpDVE5VcGhtRjF2ZHJKOW9NWE1FclFnPT0=|1447144375|6af54804f83075343dcd0d829c8498b6dd9a999e',
-    # }
-    # cookie = "_xsrf=327696efedfd4529121f81c7017cc593;cap_id=MzE5NDNhMjk5ZGUxNDVjOGE1MjdiMGU0OWY4NWE2NGE=|1447144327|c8ff179a25d92c46a9feb20932ecc113af968d6a;z_c0=QUFEQUxSRWFBQUFYQUFBQVlRSlZUYmM0YVZZQ05SSlpDVE5VcGhtRjF2ZHJKOW9NWE1FclFnPT0=|1447144375|6af54804f83075343dcd0d829c8498b6dd9a999e"
-    # cookie = urllib.urlencode(cookie)
-    # headers['Cookie'] = cookie
-    # data = urllib.urlencode(data)
-
-    request = urllib2.Request(url = url, data=json.dumps(data), headers=HEADERS)
-    response = urllib2.urlopen(request, timeout=100)
-    print response
+    crawler = Crawler()
+    people_infos = crawler.get_people_infos('zhang-jia-wei')
+    print people_infos
 
 
 
