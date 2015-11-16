@@ -41,7 +41,7 @@ class login_zhihu():
         captchaurl = self.captcha_pre + str(int(time.time() * 1000))
         print captchaurl
         req = urllib2.Request(url=captchaurl, headers=HEADERS)
-        data = urllib2.urlopen(req, timeout=1).read()
+        data = urllib2.urlopen(req, timeout=10).read()
         f = open( '%s/data/captcha.gif'%ROOT_PATH, 'w')
         f.write(data)
         f.close()
@@ -79,6 +79,7 @@ class login_zhihu():
         response = urllib2.urlopen(request)
         html =  response.read()
         name = re.findall( r'<span class="name">(.*?)</span>', html)
+        cookie.save(ignore_discard=True, ignore_expires=True)
         if name == ['kevin']:
             #保存cookie到文件
             cookie.save(ignore_discard=True, ignore_expires=True)
@@ -94,7 +95,7 @@ if __name__ == '__main__':
     if rt:
         print 'login successful'
     else:
-        print 'login fial'
+        print 'login fail'
     # req = urllib2.Request(url = 'http://www.zhihu.com', headers = HEADERS)
     # data = urllib2.urlopen(req).read()
     # print data

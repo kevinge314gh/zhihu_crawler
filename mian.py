@@ -5,6 +5,7 @@ from db.connection import connect
 from settings import MONGO_IP, MONGO_PORT, ROOT_PATH, HEADERS
 from crawler.login import set_cookie
 from cookielib import Cookie, CookieJar
+from utils.format import filter_urlencode
 
 import urllib, urllib2
 import copy

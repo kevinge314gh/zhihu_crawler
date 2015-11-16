@@ -22,14 +22,14 @@ from datetime import datetime
 _LOGGER = logging.getLogger('zhihu_crawler')
 
 
-def set_cookie():
-    #设置保存cookie的文件
-    filename = '%s/data/cookie.txt'%ROOT_PATH
-    cookie = cookielib.MozillaCookieJar(filename)
+def load_cookie():
+    #load cookie
+    cookie = cookielib.MozillaCookieJar()
+    #从文件中读取cookie内容到变量
+    cookie.load('%s/data/cookie.txt'%ROOT_PATH, ignore_discard=True, ignore_expires=True)
     handler = urllib2.HTTPCookieProcessor(cookie)
     opener = urllib2.build_opener(handler, urllib2.HTTPHandler)
     urllib2.install_opener(opener)
-    return cookie
 
 def download(url, max_try_count):
 
@@ -37,12 +37,11 @@ def download(url, max_try_count):
     try_count = 1
     while try_count <= max_try_count:
         try:
-            cookie = set_cookie()
+            load_cookie()
             request = urllib2.Request(url = url, headers=HEADERS)
             header = request.get_full_url()
             print header
             response = urllib2.urlopen(request, timeout=3)
-            cookie.save()
             if response is None:
                 _LOGGER.warning('Empty response for head request, url: %s' % url)
                 try_count += 1
@@ -65,9 +64,9 @@ def get_html(url, max_try_count=2):
         frames=False, forms=False, annoying_tags=False, remove_tags=None,
         remove_unknown_tags=False, safe_attrs_only=False)
     html = cleaner.clean_html(html)
-    # f = open('%s/data/html.txt' % ROOT_PATH, 'w')
-    # f.write(html)
-    # f.close()
+    f = open('%s/data/html.txt' % ROOT_PATH, 'w')
+    f.write(html)
+    f.close()
     return html
 
 
@@ -119,7 +118,9 @@ class Crawler(object):
         url = URL_PEOPLE + p_name + '/followees'
         html = get_html(url, max_try_count=3)
         soup = BeautifulSoup(html, 'lxml')
-        soup_list = soup.find('div', class_='zm-profile-section-list')
+        soup_list = soup.find_all('div', class_='zm-profile-card')
+        for soup in soup_list:
+            print soup.find('a', class_='zg-link-gray-normal').string
 
 
 
@@ -130,8 +131,10 @@ class Crawler(object):
 if __name__ == '__main__':
 
     crawler = Crawler()
-    people_infos = crawler.get_people_infos('zhang-jia-wei')
-    print people_infos
+    # people_infos = crawler.get_people_infos('zhang-jia-wei')
+    crawler.get_followees('zhang-jia-wei')
+    # print people_infos
+
 
 
 
