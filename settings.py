@@ -8,25 +8,13 @@ MONGO_PORT = 27017
 HEADERS = {'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:14.0) Gecko/20100101 Firefox/14.0.1',
                    'Referer' : 'http:www.zhihu.com'}
 
-# HEADERS = {'User-Agent' : ' Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36',
-#            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-#            'Host': 'www.zhihu.com',
-#            'Connection': 'keep-alive',
-#            'Content-Length': 171,
-#            'Accept-Language': 'zh-CN,zh;q=0.8,en;q=0.6',
-#            'Accept': '*/*',
-#            'X-Requested-With': 'XMLHttpRequest',
-#            'Origin': 'http://www.zhihu.com',
-#            'Referer':'http://www.zhihu.com',
-#            # 'Cookie':"_xsrf=327696efedfd4529121f81c7017cc593;cap_id='MzE5NDNhMjk5ZGUxNDVjOGE1MjdiMGU0OWY4NWE2NGE=|1447144327|c8ff179a25d92c46a9feb20932ecc113af968d6a';z_c0='QUFEQUxSRWFBQUFYQUFBQVlRSlZUYmM0YVZZQ05SSlpDVE5VcGhtRjF2ZHJKOW9NWE1FclFnPT0=|1447144375|6af54804f83075343dcd0d829c8498b6dd9a999e'"
-#            }
-
 '''PATH'''
-ROOT_PATH = '/home/kevin/github/zhihu_crawler'
+ROOT_PATH = '/var/github/zhihu_crawler'
 
 '''URL'''
 URL = 'http://www.zhihu.com'
 URL_PEOPLE = 'http://www.zhihu.com/people/'
+URL_FOLLOWEES_DYNAMIC = "http://www.zhihu.com/node/ProfileFolloweesListV2"
 
 
 LOGGING = {
