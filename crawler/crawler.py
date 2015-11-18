@@ -11,6 +11,7 @@ import json
 import logging
 import requests
 import copy
+import re
 
 from settings import ROOT_PATH,HEADERS,URL_PEOPLE
 from lxml.html.clean import Cleaner
@@ -18,6 +19,7 @@ from BeautifulSoup import UnicodeDammit
 from BeautifulSoup import BeautifulSoup
 from bs4 import BeautifulSoup
 from datetime import datetime
+from utils.format import filter_urlencode
 
 _LOGGER = logging.getLogger('zhihu_crawler')
 
@@ -117,15 +119,31 @@ class Crawler(object):
     def get_followees(self, p_name):
         url = URL_PEOPLE + p_name + '/followees'
         html = get_html(url, max_try_count=3)
+        hash_id = re.findall(r'data-init=.*\"hash_id\": \"(.*?)\"}, .*', html)[0]
+        _xsrf = re.findall(r'<input.*name=\"_xsrf\" value=\"(.*?)\">', html)
         soup = BeautifulSoup(html, 'lxml')
         soup_list = soup.find_all('div', class_='zm-profile-card')
         for soup in soup_list:
             print soup.find('a', class_='zg-link-gray-normal').string
-
-
-
-
-
+        data = {"method":"next", "params":{"offset":'$20$',"order_by":"created","hash_id":hash_id}, "_xsrf":_xsrf}
+        HEADERS2 = {"User-Agent" : "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36",
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                "Host": "www.zhihu.com",
+                "Connection": "keep-alive",
+                "Content-Length": 171,
+                "Accept-Language": "zh-CN,zh;q=0.8,en;q=0.6",
+                "Accept-Encoding": "gzip, deflate",
+                "Accept": "*/*",
+                "X-Requested-With": "XMLHttpRequest",
+                "Origin": "http://www.zhihu.com",
+                "Referer":" http://www.zhihu.com/",
+                    }
+        post_data = filter_urlencode(urllib.urlencode(data))
+        print post_data
+        load_cookie()
+        request = urllib2.Request(url = url, data=post_data, headers=HEADERS2)
+        response = urllib2.urlopen(request, timeout=3)
+        print response.read()
 
 
 if __name__ == '__main__':
